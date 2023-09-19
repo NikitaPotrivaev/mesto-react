@@ -12,34 +12,34 @@ class Api {
         }
     }
 
-    getProfileData() {
+    getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers
         })
         .then(this._checkRequest)
     }
 
-    sendProfileData(data) {
+    setUserInfo(name, about) {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers,
             method: 'PATCH',
-            body: JSON.stringify({ name: data.name, about: data.description })
+            body: JSON.stringify({ name, about })
         })
         .then(this._checkRequest)
     }
 
-    getInitialCards() {
+    getCardList() {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
         })
         .then(this._checkRequest)
     }
 
-    editAvatar(avatarUrl) {
+    setUserAvatar({ avatar }) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             headers: this._headers,
             method: 'PATCH',
-            body: JSON.stringify({ avatar: avatarUrl.avatar })
+            body: JSON.stringify({ avatar })
         })
         .then(this._checkRequest)
     }
@@ -61,20 +61,20 @@ class Api {
         .then(this._checkRequest)
     }
 
-    addLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-            headers: this._headers,
-            method: 'PUT'
-        })
-        .then(this._checkRequest)
-    }
-
-    deleteLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-            headers: this._headers,
-            method: 'DELETE'
-        })
-        .then(this._checkRequest)
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+                headers: this._headers,
+                method: 'PUT'
+            })
+            .then(this._checkRequest)
+        } else {
+            return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+                headers: this._headers,
+                method: 'DELETE'
+            })
+            .then(this._checkRequest)
+        }
     }
 }
 

@@ -4,9 +4,9 @@ export function PopupWithForm(props) {
         <div className="popup__container">
           <button className="popup__close" type="button" onClick={ props.onClose } aria-label="Закрыть"></button>
           <h2 className="popup__title popup__title_margin">{ props.title }</h2>
-          <form className="popup__form" name={ props.name } noValidate>
+          <form className="popup__form" name={ props.name } onSubmit={ props.onSubmit } noValidate>
             { props.children }
-            <button type="submit" className="popup__submit" aria-label="save">{ props.text }</button>
+            <button type="submit" className="popup__submit" aria-label="save">{ props.isLoading ? props.loadingText : props.text }</button>
           </form>
         </div>
      </div>
