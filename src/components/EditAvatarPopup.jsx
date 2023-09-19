@@ -25,7 +25,7 @@ export function EditAvatarPopup(props) {
         text = 'Сохранить'
         loadingText = 'Сохранение...'
     >
-        <input name="avatar" className="popup__edit" type="url" placeholder="Введите ссылку" ref={ref} required/>
+        <input name="avatar" className="popup__edit popup__edit_margin" type="url" placeholder="Введите ссылку" ref={ref} required/>
             <span id="avatar-error" className="popup__error popup__error_active"></span>
     </PopupWithForm>
     )
