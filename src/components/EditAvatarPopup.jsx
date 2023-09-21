@@ -18,12 +18,10 @@ export function EditAvatarPopup(props) {
     <PopupWithForm
         isOpen = { props.isOpen }
         onClose = { props.onClose }
-        isLoading = { props.isLoading }
         onSubmit = { handleSubmit }
         title = 'Обновить аватар'
         name = 'picture'
-        text = 'Сохранить'
-        loadingText = 'Сохранение...'
+        buttonText = { props.isLoading ? 'Сохранение...' : 'Сохранить' }
     >
         <input name="avatar" className="popup__edit popup__edit_margin" type="url" placeholder="Введите ссылку" ref={ref} required/>
             <span id="avatar-error" className="popup__error popup__error_active"></span>

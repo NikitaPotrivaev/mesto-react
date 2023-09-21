@@ -10,7 +10,7 @@ export function EditProfilePopup(props) {
     useEffect(() => {
         setName(currentUser.name)
         setDescription(currentUser.about)
-    }, [currentUser])
+    }, [props.isOpen])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -24,12 +24,10 @@ export function EditProfilePopup(props) {
         <PopupWithForm
             isOpen = { props.isOpen }
             onClose = { props.onClose }
-            isLoading = { props.isLoading }
             onSubmit = { handleSubmit }
             title = 'Редактировать профиль'
             name = 'profile'
-            text = 'Сохранить'
-            loadingText = 'Сохранение...'
+            buttonText = { props.isLoading ? 'Сохранение...' : 'Сохранить' }
         >
         <input name="name" className="popup__edit popup__edit_margin" type="text" placeholder="Ваше имя" value={ name || '' } onChange={ e => setName(e.target.value) } minLength="2" maxLength="40" required/>
             <span id="name-error" className="popup__error popup__error_active"></span>

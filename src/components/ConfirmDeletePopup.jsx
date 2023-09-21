@@ -10,12 +10,10 @@ export function ConfirmDeletePopup(props) {
         <PopupWithForm
             isOpen = { props.isOpen }
             onClose = { props.onClose }
-            isLoading = { props.isLoading }
             onSubmit = { handleSubmit }
             title = 'Вы уверены ?'
             name = 'delete'
-            text = 'Да'
-            loadingText = 'Удаление...'
+            buttonText = { props.isLoading ? 'Удаление...' : 'Да' }
         />
     )
 }

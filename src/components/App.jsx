@@ -16,10 +16,40 @@ function App() {
   const [isAddPlacePopup, setAddPlacePopup] = useState(false)
   const [isImagePopup, setImagePopup] = useState(false)
   const [isConfirmDeletePopupOpen, setConfirmDeletePopup] = useState(false)
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedCard, setSelectedCard] = useState({})
   const [cards, setCards] = useState([])
   const [currentUser, setCurrentUser] = useState({})
+
+  function handleEditAvatarClick() {
+    setEditAvatarPopup(true)
+  }
+
+  function handleEditProfileClick() {
+    setEditProfilePopup(true)
+  }
+
+  function handleAddPlaceClick() {
+    setAddPlacePopup(true)
+  }
+
+  function handleCardClick(card) {
+    setImagePopup(true)
+    setSelectedCard({ name: card.name, link: card.link })
+  }
+
+  function handleConfirmDeleteClick(card) {
+    setSelectedCard(card)
+    setConfirmDeletePopup(!isConfirmDeletePopupOpen)
+  }
+
+  function closeAllPopups() {
+    setEditAvatarPopup(false)
+    setEditProfilePopup(false)
+    setAddPlacePopup(false)
+    setImagePopup(false)
+    setConfirmDeletePopup(false)
+  }
 
   useEffect(() => {
     Promise.all([ api.getUserInfo(), api.getCardList() ])
@@ -40,46 +70,46 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    setLoading(true)
+    setIsLoading(true)
     api.deleteCard(card._id)
       .then(() => {setCards((element) => element.filter((item) => item._id !== card._id))
         closeAllPopups()
       })
       .catch(err => console.log(`Ошибка при удалении карточки, ${err}`))
-      .finally(() => setLoading(false))
+      .finally(() => setIsLoading(false))
   }
 
   function handleUpdateUser(user) {
-    setLoading(true)
+    setIsLoading(true)
     api.setUserInfo(user.name, user.about)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
         })
         .catch(err => console.log(`Ошибка при редактировании профиля, ${err}`))
-        .finally(() => setLoading(false))
-      }
+        .finally(() => setIsLoading(false))
+  }
 
   function handleUpdateAvatar(url) {
-    setLoading(true)
+    setIsLoading(true)
     api.setUserAvatar(url)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
       })
       .catch(err => console.log(`Ошибка при редактировании аватара, ${err}`))
-      .finally(() => setLoading(false))
+      .finally(() => setIsLoading(false))
   }
 
   function handleAddPlaceSubmit(name, link) {
-    setLoading(true)
+    setIsLoading(true)
     api.addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards])
         closeAllPopups()
       })
       .catch(err => console.log(`Ошибка при создании карточки, ${err}`))
-      .finally(() => setLoading(false))
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
@@ -97,36 +127,6 @@ function App() {
       }
     })
   }, [])
-
-  function handleConfirmDeleteClick(card) {
-    setSelectedCard(card)
-    setConfirmDeletePopup(!isConfirmDeletePopupOpen)
-  }
-
-  function handleEditAvatarClick() {
-    setEditAvatarPopup(true)
-  }
-
-  function handleEditProfileClick() {
-    setEditProfilePopup(true)
-  }
-
-  function handleAddPlaceClick() {
-    setAddPlacePopup(true)
-  }
-
-  function handleCardClick(card) {
-    setImagePopup(true)
-    setSelectedCard({ name: card.name, link: card.link })
-  }
-
-  function closeAllPopups() {
-    setEditAvatarPopup(false)
-    setEditProfilePopup(false)
-    setAddPlacePopup(false)
-    setImagePopup(false)
-    setConfirmDeletePopup(false)
-  }
 
   return (
     <CurrentUserContext.Provider value={ currentUser }>

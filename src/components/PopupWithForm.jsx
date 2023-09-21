@@ -6,7 +6,7 @@ export function PopupWithForm(props) {
           <h2 className="popup__title ">{ props.title }</h2>
           <form className="popup__form" name={ props.name } onSubmit={ props.onSubmit } noValidate>
             { props.children }
-            <button type="submit" className="popup__submit" aria-label="save">{ props.isLoading ? props.loadingText : props.text }</button>
+            <button type="submit" className="popup__submit" aria-label="save">{ props.buttonText }</button>
           </form>
         </div>
      </div>

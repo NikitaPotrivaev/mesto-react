@@ -20,12 +20,10 @@ export function AddPlacePopup(props) {
     <PopupWithForm
         isOpen = { props.isOpen }
         onClose = { props.onClose }
-        isLoading = { props.isLoading }
         onSubmit = { handleSubmit }
         title = 'Новое место'
         name = 'mesto'
-        text = 'Создать'
-        loadingText = 'Сохранение...'
+        buttonText = { props.isLoading ? 'Сохранение...' : 'Создать' }
     >
         <input name="cards" className="popup__edit popup__edit_margin" value={ name || '' } onChange={ e => setName(e.target.value) } type="text" placeholder="Название" minLength="2" maxLength="30" required/>
             <span id="cards-error" className="popup__error popup__error_active"></span>
